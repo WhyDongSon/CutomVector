@@ -8,6 +8,11 @@
 #include "CutomVectorDlg.h"
 #include "afxdialogex.h"
 
+//나누는걸 지원하지 않음.
+#include "CVector.cpp"
+#include "CVector_iterator.cpp"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -49,7 +54,6 @@ END_MESSAGE_MAP()
 // CCutomVectorDlg 대화 상자
 
 
-
 CCutomVectorDlg::CCutomVectorDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CUTOMVECTOR_DIALOG, pParent)
 {
@@ -65,6 +69,7 @@ BEGIN_MESSAGE_MAP(CCutomVectorDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &CCutomVectorDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +158,8 @@ HCURSOR CCutomVectorDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+//Test Button
+void CCutomVectorDlg::OnBnClickedButton1()
+{
+	CVector<int> test(10,3);
+}
