@@ -9,22 +9,22 @@ class CVector_iterator
 public:
 	//생성자
 	CVector_iterator();
-	CVector_iterator(int nSize, T* TstartAdress);
+	CVector_iterator(T* TstartAdress);
 
 	//소멸자
-	~CVector_iterator();
+	virtual ~CVector_iterator();
 
 	//연산자 오버로딩
 	//CVectorData operator()(int nSize);
 	//CVectorData operator()(int nSize, int nInit);
 
 	//기능 함수
-	void SetAdress(const T* TstartAdess);
+	void SetAdress(T* TstartAdess);
+	T* GetAdress(int nIndex);
 
 private:
 	//멤버 변수
-	T		**pAdress;
-	int		nSize;
+	T		*pAdress;
 };
 
 #endif

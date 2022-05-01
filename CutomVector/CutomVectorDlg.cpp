@@ -162,4 +162,8 @@ HCURSOR CCutomVectorDlg::OnQueryDragIcon()
 void CCutomVectorDlg::OnBnClickedButton1()
 {
 	CVector<int> test(10,3);
+
+	int namsoo;
+
+	namsoo = test[5];
 }

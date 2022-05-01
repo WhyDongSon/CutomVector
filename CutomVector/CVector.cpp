@@ -5,32 +5,34 @@
 //CVectorData
 //*******************************************************************
 template<typename T>
-CVectorData<T>::CVectorData():pData(nullptr), Iterator(nullptr)
+CVectorData<T>::CVectorData():pData(nullptr), Iterator(nullptr), nSize(0)
 {
 }
 
 template<typename T>
-CVectorData<T>::CVectorData(int nSize)
+CVectorData<T>::CVectorData(int nSize) : nSize(nSize)
 {
 	pData = new T[nSize];
+	Iterator = new CVector_iterator<T>[nSize];
 
 	for (int i = 0; i < nSize; i++)
 	{
 		pData[i] = 0;
+		Iterator[i].SetAdress(&pData[i]);
 	}
 }
 
 template<typename T>
-CVectorData<T>::CVectorData(int nSize, int nInit)
+CVectorData<T>::CVectorData(int nSize, int nInit) : nSize(nSize)
 {
 	pData = new T[nSize];
+	Iterator = new CVector_iterator<T>[nSize];
 
 	for (int i = 0; i < nSize; i++)
 	{
 		pData[i] = nInit;
+		Iterator[i].SetAdress(&pData[i]);
 	}
-
-	Iterator = new Citerator(nSize, &pData[0]);
 }
 
 template<typename T>
@@ -44,10 +46,33 @@ template<typename T>
 
 	if (Iterator)
 	{
-		delete Iterator;
+		delete[] Iterator;
 		Iterator = nullptr;
 	}
 }
+
+ //기능함수
+ template<typename T>
+ CVector_iterator<T>* CVectorData<T>::GetCiterator(int nIdex)
+ {
+	 if (Iterator[nIdex] != nullptr)
+	 {
+		 return &Iterator[nIdex];
+	 }
+	 else
+	 {
+		 return nullptr;
+	 }
+ }
+
+ template<typename T>
+ T* CVectorData<T>::GetpData(int nIdex)
+ {
+	 if (nIdex >= nSize)
+		 return nullptr;
+
+	 return &pData[nIdex];
+ }
 
  //연산자 오버로딩
 //template<typename T>
@@ -133,11 +158,9 @@ CVector<T>::~CVector()
 
 // 연산자 오버로딩
 template<typename T>
-CVector<T> CVector<T>::operator[](int nNum)
+T& CVector<T>::operator[](int nNum)
 {
-	T& Result = pData[nNum];
-
-	return Result;
+	return *(pData->GetpData(nNum));
 }
 
 // 기능 함수
@@ -159,4 +182,38 @@ T& CVector<T>::Cback()
 		return pData[nSize - 1];
 	else
 		return nullptr;
+}
+
+template<typename T>
+T* CVector<T>::Cbegin()
+{
+	CVector_iterator<T> *citerator;
+
+	citerator = pData->GetCiterator(FIST_ITERATOR);
+
+	if (citerator)
+	{
+		return citerator;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+template<typename T>
+T* CVector<T>::Cend()
+{
+	CVector_iterator<T> *citerator;
+
+	citerator = pData->GetCiterator(LAST_ITERATOR);
+
+	if (citerator)
+	{
+		return citerator;
+	}
+	else
+	{
+		return nullptr;
+	}
 }

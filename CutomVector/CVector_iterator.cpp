@@ -4,49 +4,84 @@
 
 //생성자
 template<typename T>
-CVector_iterator<T>::CVector_iterator() : pAdress(nullptr) , nSize(0)
+CVector_iterator<T>::CVector_iterator() : pAdress(nullptr)
 {
 
 }
 template<typename T>
-CVector_iterator<T>::CVector_iterator(int nSize, T* TstartAdress) : nSize(nSize)
+CVector_iterator<T>::CVector_iterator(T* TstartAdress)
 {
-	pAdress = new T*[nSize];
-
-	// 주소값 저장
-	for (int i = 0; i < nSize; i++)
-	{
-		*(pAdress + i) = (TstartAdress + i);
-	}
+	pAdress = TstartAdress;
 }
+
+//template<typename T>
+//CVector_iterator<T>::CVector_iterator(int nSize, T* TstartAdress) : nSize(nSize)
+//{
+//	pAdress = new T*[nSize];
+//
+//	// 주소값 저장
+//	for (int i = 0; i < nSize; i++)
+//	{
+//		*(pAdress + i) = (TstartAdress + i);
+//	}
+//}
 
 //소멸자
 template<typename T>
 CVector_iterator<T>::~CVector_iterator()
 {
-	if (pAdress)
-	{
-		delete[] pAdress;
-		pAdress = nullptr;
-	}
+
 }
 
 //기능 함수
+//template<typename T>
+//void CVector_iterator<T>::SetAdress(const T* TstartAdess)
+//{
+//	if (nSize <= 0 || pAdress == nullptr)
+//		return;
+//
+//	if (pAdress)
+//	{
+//		delete[] pAdress;
+//	}
+//
+//	pAdress = new T * [nSize];
+//	// 주소값 저장
+//	for (int i = 0; i < nSize; i++)
+//	{
+//		*(pAdress + i) = (TstartAdress + i);
+//	}
+//}
+
+//template<typename T>
+//T* CVector_iterator<T>::GetAdress(int nIdex)
+//{
+//	if (pAdress)
+//	{
+//		return *(pAdress + nIdex)
+//	}
+//	else
+//	{
+//		return nullptr;
+//	}
+//}
+
+//기능함수
 template<typename T>
-void CVector_iterator<T>::SetAdress(const T* TstartAdess)
+void CVector_iterator<T>::SetAdress(T* TstartAdess)
 {
-	if (nSize <= 0 || pAdress == nullptr)
-		return;
+	pAdress = TstartAdess;
+}
 
-	if (pAdress)
+template<typename T>
+T* CVector_iterator<T>::GetAdress(int nIndex)
+{
+	if (pAdress != nullptr)
 	{
-		delete[] pAdress;
+		return pAdress;
 	}
-
-	pAdress = new T * [nSize];
-	// 주소값 저장
-	for (int i = 0; i < nSize; i++)
+	else
 	{
-		*(pAdress + i) = (TstartAdress + i);
+		return nullptr;
 	}
 }

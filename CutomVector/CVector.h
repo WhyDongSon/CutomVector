@@ -1,6 +1,8 @@
 #ifndef CVECTOR_H
 #define CVECTOR_H
 
+#define FIST_ITERATOR (0)
+
 #pragma once
 #include "CVector_iterator.h"
 
@@ -19,7 +21,11 @@ public:
 	CVectorData(int nSize, int nInit); //Size 및 초기값 설정
 
 	//소멸자
-	~CVectorData();
+	virtual ~CVectorData();
+
+	//기능 함수
+	Citerator* GetCiterator(int nIdex);
+	T* GetpData(int nIdex);
 
 	//연산자 오버로딩
 	//CVectorData operator()(int nSize);
@@ -28,6 +34,7 @@ public:
 private:
 	T			*pData;
 	Citerator	*Iterator; //Adress
+	int			nSize;
 };
 
 //*******************************************************************
@@ -38,6 +45,7 @@ class CVector
 {
 public:
 	using CData = CVectorData<T>;
+	using Citerator = CVector_iterator<T>;
 
 	//기본 생성자
 	CVector();
@@ -47,14 +55,18 @@ public:
 	CVector(int nSize, int nInit); //Size 및 초기값 설정
 
 	//소멸자
-	~CVector();
+	virtual ~CVector();
 
 	//연산자 오버로딩
-	CVector operator[](int nNum);
+	T& operator[](int nNum);
 
 	//기능 함수
 	T& Cfront(); // 첫번째 참조값 반환
 	T& Cback();	 // 마지막 참조값 반환
+
+	T* Cbegin(); // 첫번째 위치값 반화(iterator안 주소값)
+	T* Cend();	 // 마지막 위치값 반환(iterator안 주소값)
+
 
 private:
 	CData		*pData;
