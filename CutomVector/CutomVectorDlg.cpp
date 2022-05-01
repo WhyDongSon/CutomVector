@@ -165,5 +165,7 @@ void CCutomVectorDlg::OnBnClickedButton1()
 
 	int namsoo;
 
+	test.Creserve(20);
+
 	namsoo = test[5];
 }

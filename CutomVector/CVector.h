@@ -18,7 +18,9 @@ public:
 	//생성자
 	CVectorData();
 	CVectorData(int nSize); //Size 초기 설정(초기값 0)
+	CVectorData(int nSize, int nCapacity, int nInit); //Size 초기 설정(초기값 0)
 	CVectorData(int nSize, int nInit); //Size 및 초기값 설정
+	CVectorData(const CVectorData& Data);
 
 	//소멸자
 	virtual ~CVectorData();
@@ -26,6 +28,9 @@ public:
 	//기능 함수
 	Citerator* GetCiterator(int nIdex);
 	T* GetpData(int nIdex);
+
+private:
+	void SetSize(int nSize, int nCapacity); // Size, Capacity 설정.
 
 	//연산자 오버로딩
 	//CVectorData operator()(int nSize);
@@ -35,6 +40,7 @@ private:
 	T			*pData;
 	Citerator	*Iterator; //Adress
 	int			nSize;
+	int			nCapacity;
 };
 
 //*******************************************************************
@@ -64,12 +70,16 @@ public:
 	T& Cfront(); // 첫번째 참조값 반환
 	T& Cback();	 // 마지막 참조값 반환
 
-	T* Cbegin(); // 첫번째 위치값 반화(iterator안 주소값)
-	T* Cend();	 // 마지막 위치값 반환(iterator안 주소값)
+	int Csize();
+	int Ccapacity();
+	bool Creserve(int nNum);
+	bool Cempty();
 
+	Citerator* Cbegin(); // 첫번째 위치값 반화
+	Citerator* Cend();	 // 마지막 위치값 반환
 
 private:
-	CData		*pData;
+	CData		*pData;	// Data 한개만 만듬 (그 안에서 동적 할당으로 늘려 나감)
 	int			nSize;
 	int			nCapasity;
 };
