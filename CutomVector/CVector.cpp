@@ -411,6 +411,7 @@ void CVector<T>::Cpush_back(T nData)
 
 			pData = new CData(nSize, nCapasity, 0);
 			pData->SetBackData(nData);
+
 		}
 		else
 		{
@@ -423,8 +424,9 @@ void CVector<T>::Cpush_back(T nData)
 
 			pData->SetBackData(nData);
 
-			delete PreData;
 		}
+
+		delete PreData;
 	}
 	else
 	{
