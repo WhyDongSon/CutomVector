@@ -109,6 +109,25 @@ template<typename T>
 	 nSize = nSize;
 	 nCapacity = nCapacity;
  }
+
+ template<typename T>
+ void CVectorData<T>::SetBackData(T nData)
+ {
+	 //Szie 늘린다음에 호출됨.
+	 pData[nSize - 1] = nData;
+	 Iterator[nSize - 1].SetAdress(&pData[nSize - 1]);
+ }
+
+ template<typename T>
+ T CVectorData<T>::GetBackData()
+ {
+	 //Size 줄인다음에 호출
+	 T ReturnData = pData[nSize];
+
+	 pData[nSize] = 0;
+	 Iterator[nSize].SetAdress(nullptr);
+ }
+
  //연산자 오버로딩
 //template<typename T>
 //CVectorData<T> CVectorData<T> :: operator()(int nSize)
@@ -284,13 +303,137 @@ bool CVector<T>::Creserve(int nNum)
 		pData = new CData(nSize, nCapasity, 0);
 
 		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * nSize);
-		memcpy(pData->GetCiterator(0), PreData->GetCiterator(0), sizeof(Citerator) * nSize);
+		//memcpy(pData->GetCiterator(0), PreData->GetCiterator(0), sizeof(Citerator) * nSize);
 	}
 	else{ return FALSE;}
 
 	delete PreData;
 
 	return TRUE;
+}
+
+template<typename T>
+bool CVector<T>::Cresize(int size)
+{
+	if (nSize >= size)
+		return FALSE;
+
+	int preSzie = nSize;
+
+	//이전 데이터 복사
+	CData* PreData = new CData(*pData);
+
+	nSize = size;
+	
+	if (nCapasity < nSize)
+		nCapasity = nSize;
+
+	if (pData != nullptr)
+	{
+		//현재 데이터 삭제
+		delete pData;
+
+		pData = new CData(nSize, nCapasity, 0);
+
+		//데이터 복사
+		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
+		//memcpy(pData->GetCiterator(0), PreData->GetCiterator(0), sizeof(Citerator) * preSzie);
+	}
+	else
+	{
+		return nullptr;
+	}
+
+	delete preData;
+
+	return TRUE;
+}
+
+template<typename T>
+bool CVector<T>::Cresize(int size, int nNum)
+{
+	if (nSize >= size)
+		return FALSE;
+
+	int preSzie = nSize;
+
+	//이전 데이터 복사
+	CData* PreData = new CData(*pData);
+
+	nSize = size;
+
+	if (nCapasity < nSize)
+		nCapasity = nSize;
+
+	if (pData != nullptr)
+	{
+		//현재 데이터 삭제
+		delete pData;
+
+		pData = new CData(nSize, nCapasity, 0);
+
+		//데이터 복사
+		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
+		//memcpy(pData->GetCiterator(0), PreData->GetCiterator(0), sizeof(Citerator) * nSize);
+
+		for (int i = preSzie; i < nSize; i++)
+		{
+			//push_back 들어갈 자리
+		}
+	}
+	else
+	{
+		return nullptr;
+	}
+
+	delete preData;
+
+	return TRUE;
+}
+
+template<typename T>
+void CVector<T>::Cpush_back(T nData)
+{
+	if (nSize == nCapasity)
+	{
+		if (nSize == 0 && nCapasity == 0)
+		{
+			nCapasity = 1;
+		}
+		else
+		{
+			nCapasity = static_cast<int>(nSize * 1.5);
+		}
+		nSize++;
+
+		//데이터 복사
+		CData* PreData = new CData(*pData);
+
+		pData = new CData(nSize, nCapasity, 0);
+		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
+
+		pData->SetBackData(nData);
+
+		delete preData;
+	}
+	else
+	{
+		nSize++;
+
+		pData->SetSize(nSize, nCapacity); // Size, Capacity 설정.
+		pData->SetBackData(nData);
+	}
+}
+template<typename T>
+T CVector<T>::Cpop_back()
+{
+	if (nSize <= 0)
+		return 0;
+
+	nSize--;
+
+	pData->SetSize(nSize, nCapasity);
+	pData->GetBackData();
 }
 
 template<typename T>

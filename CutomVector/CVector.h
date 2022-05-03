@@ -28,8 +28,9 @@ public:
 	//기능 함수
 	Citerator* GetCiterator(int nIdex);
 	T* GetpData(int nIdex);
+	T  GetBackData();
 
-private:
+	void SetBackData(T nData);
 	void SetSize(int nSize, int nCapacity); // Size, Capacity 설정.
 
 	//연산자 오버로딩
@@ -74,6 +75,11 @@ public:
 	int Ccapacity();
 	bool Creserve(int nNum);
 	bool Cempty();
+	bool Cresize(int size);
+	bool Cresize(int size, int nNum);
+
+	void Cpush_back(T nData);
+	T Cpop_back();
 
 	Citerator* Cbegin(); // 첫번째 위치값 반화
 	Citerator* Cend();	 // 마지막 위치값 반환
