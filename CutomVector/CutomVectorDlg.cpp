@@ -161,11 +161,36 @@ HCURSOR CCutomVectorDlg::OnQueryDragIcon()
 //Test Button
 void CCutomVectorDlg::OnBnClickedButton1()
 {
-	CVector<int> test(10,3);
+	CVector<int> test;
 
 	int namsoo;
 
-	test.Creserve(20);
-
+	test.Cpush_back(20);
+	namsoo = test[0];
+	test.Cpush_back(30);
+	namsoo = test[1];
+	test.Cpush_back(40);
+	namsoo = test[2];
+	test.Cpush_back(50);
+	namsoo = test[3];
+	test.Cpush_back(60);
+	namsoo = test[4];
+	test.Cpush_back(70);
 	namsoo = test[5];
+	test.Cpush_back(80);
+	namsoo = test[6];
+	test.Cpush_back(90);
+	namsoo = test[7];
+	test.Cpush_back(100);
+	namsoo = test[8];
+
+	namsoo = test[0];
+	namsoo = test[1];
+	namsoo = test[2];
+	namsoo = test[3];
+	namsoo = test[4];
+	namsoo = test[5];
+	namsoo = test[6];
+	namsoo = test[7];
+	namsoo = test[8];
 }

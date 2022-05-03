@@ -104,10 +104,10 @@ template<typename T>
  }
 
  template<typename T>
- void CVectorData<T>::SetSize(int nSize, int nCapacity)
+ void CVectorData<T>::SetSize(int Size, int Capacity)
  {
-	 nSize = nSize;
-	 nCapacity = nCapacity;
+	 nSize = Size;
+	 nCapacity = Capacity;
  }
 
  template<typename T>
@@ -394,33 +394,43 @@ bool CVector<T>::Cresize(int size, int nNum)
 template<typename T>
 void CVector<T>::Cpush_back(T nData)
 {
+	int preSzie = nSize;
+
 	if (nSize == nCapasity)
 	{
-		if (nSize == 0 && nCapasity == 0)
-		{
-			nCapasity = 1;
-		}
-		else
-		{
-			nCapasity = static_cast<int>(nSize * 1.5);
-		}
-		nSize++;
-
 		//데이터 복사
 		CData* PreData = new CData(*pData);
 
-		pData = new CData(nSize, nCapasity, 0);
-		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
+		if (pData)
+			delete pData;
 
-		pData->SetBackData(nData);
+		if (nSize == 0 && nCapasity == 0)
+		{
+			nSize++;
+			nCapasity = 1;
 
-		delete preData;
+			pData = new CData(nSize, nCapasity, 0);
+			pData->SetBackData(nData);
+		}
+		else
+		{
+			nSize++;
+
+			nCapasity = static_cast<int>(nSize * 1.5);
+
+			pData = new CData(nSize, nCapasity, 0);
+			memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
+
+			pData->SetBackData(nData);
+
+			delete PreData;
+		}
 	}
 	else
 	{
 		nSize++;
 
-		pData->SetSize(nSize, nCapacity); // Size, Capacity 설정.
+		pData->SetSize(nSize, nCapasity); // Size, Capacity 설정.
 		pData->SetBackData(nData);
 	}
 }

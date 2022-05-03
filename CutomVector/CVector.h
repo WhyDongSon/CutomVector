@@ -31,7 +31,7 @@ public:
 	T  GetBackData();
 
 	void SetBackData(T nData);
-	void SetSize(int nSize, int nCapacity); // Size, Capacity 설정.
+	void SetSize(int Size, int Capacity); // Size, Capacity 설정.
 
 	//연산자 오버로딩
 	//CVectorData operator()(int nSize);
