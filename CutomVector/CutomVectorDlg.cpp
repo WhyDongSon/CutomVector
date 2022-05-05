@@ -193,4 +193,13 @@ void CCutomVectorDlg::OnBnClickedButton1()
 	namsoo = test[6];
 	namsoo = test[7];
 	namsoo = test[8];
+
+	CVector<int>::CData::Citerator a;
+
+	for (a = test.Cbegin(); a != test.Cend(); a = ++a)
+	{
+		CVector<int>::CData::Citerator b;
+
+		b = a;
+	}
 }

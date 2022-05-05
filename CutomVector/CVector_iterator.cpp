@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CVector_iterator.h"
+#include "CVector.h"
 #include <Cstring>
 
 //생성자
@@ -32,6 +33,54 @@ CVector_iterator<T>::~CVector_iterator()
 {
 
 }
+
+//연산자 오버로딩
+//template<typename T>
+//T* CVector_iterator<T>::operator ++()
+//{
+//	return (this->pAdress + 1);
+//}
+//
+//template<typename T>
+//T* CVector_iterator<T>::operator ++(int)
+//{
+//	return (this->pAdress + 1);
+//}
+
+template<typename T>
+CVector_iterator<T>& CVector_iterator<T>::operator ++()
+{
+	CVectorData<T>* Data = (CVectorData<T>*)ClassAdress;
+	CVector_iterator<T>* Result = nullptr;
+
+	Result = Data->GetCiterator(pAdress);
+
+	return *(Result + 1);
+}
+
+template<typename T>
+CVector_iterator<T>& CVector_iterator<T>::operator ++(int)
+{
+	CVectorData<T>* Data = (CVectorData<T>*)ClassAdress;
+	CVector_iterator<T>* Result = nullptr;
+
+	Result = Data->GetCiterator(pAdress);
+
+	return *(Result + 1);
+
+}
+template<typename T>
+bool CVector_iterator<T>::operator==(CVector_iterator<T>& Iterator)
+{
+	return (this->pAdress == Iterator.pAdress);
+}
+
+template<typename T>
+bool CVector_iterator<T>::operator!=(CVector_iterator<T>& Iterator)
+{
+	return (this->pAdress != Iterator.pAdress);
+}
+
 
 //기능 함수
 //template<typename T>
@@ -74,7 +123,7 @@ void CVector_iterator<T>::SetAdress(T* TstartAdess)
 }
 
 template<typename T>
-T* CVector_iterator<T>::GetAdress(int nIndex)
+T* CVector_iterator<T>::GetAdress()
 {
 	if (pAdress != nullptr)
 	{

@@ -6,6 +6,8 @@
 #pragma once
 #include "CVector_iterator.h"
 
+static void* ClassAdress = nullptr;
+
 //*******************************************************************
 //CVectorData
 //*******************************************************************
@@ -27,6 +29,7 @@ public:
 
 	//기능 함수
 	Citerator* GetCiterator(int nIdex);
+	Citerator* GetCiterator(T* pAdress);
 	T* GetpData(int nIdex);
 	T  GetBackData();
 
@@ -81,13 +84,12 @@ public:
 	void Cpush_back(T nData);
 	T Cpop_back();
 
-	Citerator* Cbegin(); // 첫번째 위치값 반화
-	Citerator* Cend();	 // 마지막 위치값 반환
+	Citerator& Cbegin(); // 첫번째 위치값 반화
+	Citerator& Cend();	 // 마지막 위치값 반환
 
 private:
 	CData		*pData;	// Data 한개만 만듬 (그 안에서 동적 할당으로 늘려 나감)
 	int			nSize;
 	int			nCapasity;
 };
-
 #endif

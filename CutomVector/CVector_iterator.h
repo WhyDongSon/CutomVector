@@ -15,12 +15,21 @@ public:
 	virtual ~CVector_iterator();
 
 	//연산자 오버로딩
+	//T* operator++();
+	//T* operator++(int);
+
+	CVector_iterator<T>& operator++();
+	CVector_iterator<T>& operator++(int);
+	bool operator == (CVector_iterator<T>&Iterator);
+	bool operator != (CVector_iterator<T>& Iterator);
+
+	//연산자 오버로딩
 	//CVectorData operator()(int nSize);
 	//CVectorData operator()(int nSize, int nInit);
 
 	//기능 함수
 	void SetAdress(T* TstartAdess);
-	T* GetAdress(int nIndex);
+	T* GetAdress();
 
 private:
 	//멤버 변수

@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "CVector.h"
 
@@ -95,6 +96,18 @@ template<typename T>
  }
 
  template<typename T>
+CVector_iterator<T>* CVectorData<T>::GetCiterator(T* pAdress)
+ {
+	 for (int i = 0; i < nSize; i++)
+	 {
+		 if (pAdress == Iterator[i].GetAdress())
+			 return &Iterator[i];
+	 }
+
+	 return nullptr;
+ }
+
+ template<typename T>
  T* CVectorData<T>::GetpData(int nIdex)
  {
 	 if (nIdex >= nSize)
@@ -183,6 +196,7 @@ template<typename T>
 CVector<T>::CVector() :  nSize(0), nCapasity(0)
 {
 	pData = new CData();
+	ClassAdress = pData;
 }
 
 // 생성시 기본 메모리 할당
@@ -190,6 +204,7 @@ template<typename T>
 CVector<T>::CVector(int nSize) : nSize(nSize), nCapasity(static_cast<int>(nSize * 1.5))
 {
 	pData = new CData(nSize, nCapasity, 0);
+	ClassAdress = pData;
 }
 
 //생성시 기본 메모리 할당 And 초기화
@@ -197,6 +212,7 @@ template<typename T>
 CVector<T>::CVector(int nSize, int nInit) : nSize(nSize), nCapasity(static_cast<int>(nSize * 1.5))
 {
 	pData = new CData(nSize, nCapasity, nInit);
+	ClassAdress = pData;
 }
 
 // 소멸자
@@ -207,6 +223,7 @@ CVector<T>::~CVector()
 	{
 		delete pData;
 		pData = nullptr;
+		ClassAdress = nullptr;
 	}
 }
 
@@ -239,37 +256,23 @@ T& CVector<T>::Cback()
 }
 
 template<typename T>
-CVector_iterator<T>* CVector<T>::Cbegin()
+CVector_iterator<T>& CVector<T>::Cbegin()
 {
 	CVector_iterator<T> *citerator;
 
 	citerator = pData->GetCiterator(FIST_ITERATOR);
 
-	if (citerator)
-	{
-		return citerator;
-	}
-	else
-	{
-		return nullptr;
-	}
+	return *citerator;
 }
 
 template<typename T>
-CVector_iterator<T>* CVector<T>::Cend()
+CVector_iterator<T>& CVector<T>::Cend()
 {
 	CVector_iterator<T> *citerator;
 
-	citerator = pData->GetCiterator(LAST_ITERATOR);
+	citerator = pData->GetCiterator(nSize - 1);
 
-	if (citerator)
-	{
-		return citerator;
-	}
-	else
-	{
-		return nullptr;
-	}
+	return *citerator;
 }
 
 template<typename T>
@@ -301,6 +304,7 @@ bool CVector<T>::Creserve(int nNum)
 		delete pData;
 
 		pData = new CData(nSize, nCapasity, 0);
+		ClassAdress = pData;
 
 		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * nSize);
 		//memcpy(pData->GetCiterator(0), PreData->GetCiterator(0), sizeof(Citerator) * nSize);
@@ -334,6 +338,7 @@ bool CVector<T>::Cresize(int size)
 		delete pData;
 
 		pData = new CData(nSize, nCapasity, 0);
+		ClassAdress = pData;
 
 		//데이터 복사
 		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
@@ -371,6 +376,7 @@ bool CVector<T>::Cresize(int size, int nNum)
 		delete pData;
 
 		pData = new CData(nSize, nCapasity, 0);
+		ClassAdress = pData;
 
 		//데이터 복사
 		memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
@@ -410,6 +416,7 @@ void CVector<T>::Cpush_back(T nData)
 			nCapasity = 1;
 
 			pData = new CData(nSize, nCapasity, 0);
+			ClassAdress = pData;
 			pData->SetBackData(nData);
 
 		}
@@ -420,6 +427,7 @@ void CVector<T>::Cpush_back(T nData)
 			nCapasity = static_cast<int>(nSize * 1.5);
 
 			pData = new CData(nSize, nCapasity, 0);
+			ClassAdress = pData;
 			memcpy(pData->GetpData(0), PreData->GetpData(0), sizeof(T) * preSzie);
 
 			pData->SetBackData(nData);
